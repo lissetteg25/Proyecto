@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liss Pastry Shop - Alta Pastelería</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght=0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #d4a373;
+            --primary-light: #fefae0;
+            --dark: #1f1f1f;
+            --light: #fafafa;
+            --accent: #e07a5f;
+            --gray: #6c757d;
+            --success: #2a9d8f;
+            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* --- 1. HEADER CON FOTO DE FONDO Y SLOGAN --- */
+        header {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                        url('imagen/pasteleria1.jpg') no-repeat center center/cover;
+            height: 45vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 20px;
+        }
+
+        header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.8rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+            text-shadow: 2px 2px 15px rgba(0,0,0,0.7);
+        }
+
+        header p {
+            font-size: 1.3rem;
+            font-style: italic;
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 1px;
+            text-shadow: 1px 1px 8px rgba(0,0,0,0.7);
+        }
+
+        /* --- MENÚ DE NAVEGACIÓN BASADO EN ICONOS --- */
+        nav {
+            background: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            padding: 15px 0;
+        }
+
+        .nav-container {
+            display: flex;
+            gap: 20px;
+            max-width: 1200px;
+            width: 100%;
+            justify-content: space-around;
+            padding: 0 20px;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--gray);
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-item i {
+            font-size: 1.6rem;
+            margin-bottom: 6px;
+            transition: var(--transition);
+        }
+
+        .nav-item:hover, .nav-item.active {
+            color: var(--primary);
+        }
+
+        .nav-item:hover i, .nav-item.active i {
+            transform: translateY(-5px);
+            color: var(--accent);
+        }
+
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            width: 0;
+            height: 3px;
+            background-color: var(--accent);
+            transition: var(--transition);
+        }
+
+        .nav-item.active::after {
+            width: 100%;
+        }
+
+        /* --- CONTENEDOR PRINCIPAL Y SECCIONES --- */
+        main {
+            flex: 1;
+            max-width: 1200px;
+            width: 100%;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            text-align: center;
+            color: var(--dark);
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: var(--primary);
+            margin: 10px auto 0;
+        }
+
+        /* --- 2. SOBRE NOSOTROS --- */
+        .about-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .about-img {
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        /* --- 3. USUARIO --- */
+        .form-container {
+            max-width: 650px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 15px;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
+        .form-group label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--dark);
+        }
+
+        .form-group input, .form-group select {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 8px rgba(212, 163, 115, 0.2);
+        }
+
+        .btn {
+            background: var(--dark);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            background: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .btn.added {
+            background: var(--success) !important;
+            transform: scale(0.98);
+        }
+
+        /* --- 4. CATÁLOGO --- */
+        .catalog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.03);
+            transition: var(--transition);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+        }
+
+        .product-img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .product-id {
+            font-size: 0.75rem;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .product-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            margin: 5px 0 10px;
+            font-weight: 600;
+        }
+
+        .product-desc {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .product-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+        }
+
+        .product-price {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .product-stock {
+            font-size: 0.8rem;
+            color: #2a9d8f;
+            background: #e8f5e9;
+            padding: 4px 8px;
+            border-radius: 20px;
+        }
+
+        /* --- 5. CARRITO Y 6. PAGOS --- */
+        .table-container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th, td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            font-weight: 600;
+            color: var(--gray);
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .quantity-btn {
+            background: #eee;
+            border: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .cart-summary {
+            margin-top: 30px;
+            text-align: right;
+        }
+
+        .cart-summary h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .cart-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        /* --- 7. CONTACTO --- */
+        .contact-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .contact-info {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .contact-item i {
+            font-size: 1.5rem;
+            color: var(--primary);
+            width: 40px;
+            height: 40px;
+            background: var(--primary-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .social-icons a {
+            font-size: 1.3rem;
+            color: white;
+            background: var(--dark);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .social-icons a:hover {
+            background: var(--accent);
+            transform: translateY(-5px);
+        }
+
+        .map-mock {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+            height: 100%;
+            min-height: 320px;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1516253593875-bd7ba052fbc5?auto=format&fit=crop&w=800&q=80') center center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            position: relative;
+        }
+
+        .map-overlay {
+            padding: 20px;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background: var(--dark);
+            color: #aaa;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9rem;
+            margin-top: auto;
+        }
+
+        /* Responsividad */
+        @media (max-width: 768px) {
+            .about-container, .contact-wrapper, .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+            header h1 { font-size: 2.3rem; }
+            .nav-container { gap: 10px; }
+            .nav-item span { display: none; }
+            .cart-actions { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Liss Pastry Shop</h1>
+        <p>"Horneando instantes de felicidad"</p>
+    </header>
+
+    <nav>
+        <div class="nav-container">
+            <a class="nav-item active" onclick="switchSection('nosotros')">
+                <i class="fa-solid fa-cookie-bite"></i>
+                <span>Sobre Nosotros</span>
+            </a>
+            <a class="nav-item" onclick="switchSection('usuario')">
+                <i class="fa-solid fa-user-astronaut"></i>
+                <span>Usuario</span>
+            </a>
+            <a class="nav-item" onclick="switchSection('catalogo')">
+                <i class="fa-solid fa-utensils"></i>
+                <span>Catálogo</span>
+            </a>
+            <a class="nav-item" onclick="switchSection('carrito')">
+                <i class="fa-solid fa-basket-shopping"></i>
+                <span>Carrito (<span id="cart-count">0</span>)</span>
+            </a>
+            <a class="nav-item" onclick="switchSection('pagos')">
+                <i class="fa-solid fa-credit-card"></i>
+                <span>Pagos</span>
+            </a>
+            <a class="nav-item" onclick="switchSection('contacto')">
+                <i class="fa-solid fa-map-location-dot"></i>
+                <span>Contacto</span>
+            </a>
+        </div>
+    </nav>
+
+    <main>
+        
+        <section id="nosotros" class="section active">
+            <h2>Sobre Nosotros</h2>
+            <div class="about-container">
+                <img src="imagen/pasteleria2.jpg" alt="Pastelería Liss" class="about-img">
+                <div class="about-text">
+                    <p>En <strong>Liss Pastry Shop</strong> combinamos la precisión de las técnicas clásicas con una visión innovadora para presentar piezas de repostería únicas que despiertan emociones.</p>
+                    <p>Cada producto de nuestro catálogo es creado minuciosamente usando materias primas selectas de nivel premium. Nos apasiona acompañar tus celebraciones especiales en Durán, entregando dulzura de la más alta calidad.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="usuario" class="section">
+            <h2>Crear Cuenta de Usuario</h2>
+            <div class="form-container">
+                <form id="register-form" onsubmit="registerUser(event)">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Número de Cédula</label>
+                            <input type="text" id="userCedula" placeholder="Ej: 0928XXXXXX" minlength="10" maxlength="10" pattern="[0-9]+" title="Por favor ingrese los 10 dígitos de su cédula" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Nombre</label>
+                            <input type="text" id="firstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Apellido</label>
+                            <input type="text" id="lastName" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Correo Electrónico</label>
+                            <input type="email" id="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Contraseña</label>
+                            <input type="password" id="password" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Teléfono</label>
+                            <input type="tel" id="phone" required>
+                        </div>
+                        <div class="form-group full-width">
+                            <label>Dirección</label>
+                            <input type="text" id="address" required>
+                        </div>
+                        <div class="form-group full-width">
+                            <label>Fecha de Registro</label>
+                            <input type="date" id="regDate" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn">Registrar Cuenta</button>
+                </form>
+            </div>
+        </section>
+
+        <section id="catalogo" class="section">
+            <h2>Catálogo de Especialidades</h2>
+            <div class="catalog-grid" id="catalog-container">
+                </div>
+        </section>
+
+        <section id="carrito" class="section">
+            <h2>Verificar su Pedido</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Precio Unitario</th>
+                            <th>Cantidad</th>
+                            <th>Subtotal</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cart-table-body">
+                        </tbody>
+                </table>
+                <div class="cart-summary">
+                    <h3>Total: <span id="cart-total">$0.00</span></h3>
+                    <div class="cart-actions">
+                        <button class="btn" style="width: auto;" onclick="proceedToPayment()">Proceder a la Sección de Pago <i class="fa-solid fa-arrow-right"></i></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="pagos" class="section">
+            <h2>Estado y Método de Pago</h2>
+            <div class="table-container" style="max-width: 700px; margin: 0 auto;">
+                <div id="payment-details">
+                    <p style="text-align: center; color: var(--gray);">No se registran transacciones activas. Agregue productos al carrito y proceda al pago.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="contacto" class="section">
+            <h2>Contacto</h2>
+            <div class="contact-wrapper">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <div>
+                            <strong>Dirección Principal</strong>
+                            <p>Cdla. Primavera 2, Durán - Ecuador</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fa-solid fa-envelope"></i>
+                        <div>
+                            <strong>Correo Electrónico</strong>
+                            <p>lisspastryshop@outlook.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fa-solid fa-phone"></i>
+                        <div>
+                            <strong>Números Telefónicos</strong>
+                            <p>+593 99 280 1234 / +593 98 765 4321</p>
+                        </div>
+                    </div>
+                    <div class="social-icons">
+                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+                    </div>
+                </div>
+                <div class="map-mock">
+                    <div class="map-overlay">
+                        <i class="fa-solid fa-map-pinned" style="font-size: 3rem; margin-bottom: 10px; color: var(--primary);"></i>
+                        <h3>Ubicación</h3>
+                        <p>Cdla. Primavera 2, Durán, Guayas</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Liss Pastry Shop. Todos los derechos reservados.</p>
+    </footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.43.4/dist/umd/supabase.js"></script>
+
+<script>
+    // 2. AQUÍ DEBES PEGAR TUS LLAVES:
+    const SUPABASE_URL = "https://zbtvueidrhgklqzhwvky.supabase.co"; 
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpidHZ1ZWlkcmhna2xxemh3dmt5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE5MTc5NjAsImV4cCI6MjA5NzQ5Mzk2MH0._HIJLN0t9zGtJXMw-sK4RdOx1GYsx3qyhDVh-AXY9NI"; 
+
+    // 3. Inicialización global para que todo tu archivo tenga acceso
+    window.supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    let cart = [];
+    let userData = null;
+    
+</script>
+
+    <script>
+        // Arreglo Oficial de 11 Postres Solicitados
+        const products = [
+            { id: 'LISS-01', name: 'Torta Red Velvet', desc: 'Suave bizcocho de terciopelo rojo con capas sedosas y glaseado tradicional de crema de queso.', price: 28.00, stock: 6, img: src='imagen/torta1.jpg' },
+            { id: 'LISS-02', name: 'Torta de Chocolate', desc: 'Bizcocho húmedo de puro cacao belga relleno y cubierto con un fudge de chocolate artesanal.', price: 25.00, stock: 8, img: src='imagen/torta2.jpg' },
+            { id: 'LISS-03', name: 'Torta Tres Leches', desc: 'Tradicional bizcocho esponjoso bañado en nuestra mezcla secreta de tres leches, decorado con merengue y canela.', price: 22.00, stock: 5, img: src='imagen/torta3.jpg' },
+            { id: 'LISS-04', name: 'Torta de Vainilla', desc: 'Clásica, delicada y esponjosa torta infusionada con vainas de vainilla natural de Madagascar.', price: 18.00, stock: 10, img: src='imagen/torta4.jpg' },
+            { id: 'LISS-05', name: 'Cheesecake de Frutos Rojos', desc: 'Base crujiente de galleta con una crema horneada suave, cubierta de una reducción premium de fresas, moras y arándanos.', price: 26.50, stock: 4, img: src='imagen/torta5.jpg' },
+            { id: 'LISS-06', name: 'Brownie', desc: 'Fudge brownies súper melcochosos repletos de trozos de chocolate y nueces seleccionadas.', price: 3.00, stock: 24, img: src='imagen/torta6.jpg' },
+            { id: 'LISS-07', name: 'Cupcakes', desc: 'Deliciosas porciones individuales decoradas con un buttercream suave y toppings de temporada.', price: 2.50, stock: 18, img: src='imagen/torta7.jpg' },
+            { id: 'LISS-08', name: 'Budin', desc: 'Tradicional budín casero, horneado lentamente con un toque sutil de esencia de naranja y pasas al ron.', price: 12.00, stock: 7, img: src='imagen/torta8.jpg' },
+            { id: 'LISS-09', name: 'Donas', desc: 'Donas artesanales esponjosas con variados glaseados de colores y lluvias de chocolate.', price: 2.00, stock: 30, img: src='imagen/torta9.jpg' },
+            { id: 'LISS-10', name: 'Gelatina Mosaico', desc: 'Refrescantes cubos de gelatinas de frutas suspendidos en una deliciosa y cremosa base de tres leches.', price: 10.50, stock: 6, img: src='imagen/torta10.jpg' },
+            { id: 'LISS-11', name: 'Cinnamon Roll', desc: 'Roles de canela calientitos, suaves y esponjosos cubiertos con un denso glaseado original de queso crema.', price: 3.50, stock: 15, img: src='imagen/torta11.jpg' }
+        ];
+
+
+        // Renderizado del Catálogo
+        function loadCatalog() {
+            const container = document.getElementById('catalog-container');
+            container.innerHTML = '';
+            products.forEach(p => {
+                container.innerHTML += `
+                    <div class="product-card">
+                        <img src="${p.img}" alt="${p.name}" class="product-img">
+                        <div class="product-info">
+                            <div>
+                                <span class="product-id">ID: ${p.id}</span>
+                                <h3 class="product-title">${p.name}</h3>
+                                <p class="product-desc">${p.desc}</p>
+                            </div>
+                            <div class="product-meta">
+                                <span class="product-price">$${p.price.toFixed(2)}</span>
+                                <span class="product-stock">Stock: ${p.stock} u.</span>
+                            </div>
+                            <button class="btn" style="margin-top:15px;" onclick="addToCart('${p.id}', this)"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // Sistema SPA de Intercambio de Secciones
+        function switchSection(sectionId) {
+            document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            
+            document.getElementById(sectionId).classList.add('active');
+            
+            const activeNavItem = Array.from(document.querySelectorAll('.nav-item')).find(item => item.getAttribute('onclick').includes(sectionId));
+            if(activeNavItem) activeNavItem.classList.add('active');
+        }
+
+        // Manejo de Registro (Modificado con Cédula)
+        async function registerUser(e) {
+            e.preventDefault();
+            
+            const cedula = document.getElementById('userCedula').value;
+            const name = document.getElementById('firstName').value + ' ' + document.getElementById('lastName').value;
+            const email = document.getElementById('email').value;
+            const address = document.getElementById('address').value;
+            const regDate = document.getElementById('regDate').value;
+
+            userData = { cedula, name, email, address, date: regDate };
+
+            // USAMOS WINDOW.SUPABASE AQUÍ:
+            const { data, error } = await window.supabase
+                .from('usuarios')
+                .insert([
+                    { cedula: cedula, nombre: name, email: email, direccion: address, fecha_registro: regDate }
+                ]);
+
+            if (error) {
+                console.error("Error en Supabase:", error);
+                alert("Hubo un error al guardar el usuario en la base de datos.");
+            } else {
+                alert(`¡Excelente! Cuenta creada con éxito para ${userData.name}. Guardado en Supabase.`);
+                switchSection('catalogo');
+            }
+        }
+        
+
+        // Gestión del Carrito
+        function addToCart(productId, buttonElement) {
+            const product = products.find(p => p.id === productId);
+            const cartItem = cart.find(item => item.product.id === productId);
+
+            if (cartItem) {
+                if(cartItem.quantity < product.stock) {
+                    cartItem.quantity++;
+                } else {
+                    alert("Se ha agotado el stock disponible de este producto.");
+                    return;
+                }
+            } else {
+                cart.push({ product: product, quantity: 1 });
+            }
+            updateCart();
+
+            // Mensaje Temporal "Agregado al Carrito"
+            const originalHTML = buttonElement.innerHTML;
+            buttonElement.innerHTML = `<i class="fa-solid fa-circle-check"></i> Agregado al carrito ✨`;
+            buttonElement.classList.add('added');
+            buttonElement.disabled = true;
+
+            setTimeout(() => {
+                buttonElement.innerHTML = originalHTML;
+                buttonElement.classList.remove('added');
+                buttonElement.disabled = false;
+            }, 1000);
+        }
+
+        function updateCart() {
+            const tbody = document.getElementById('cart-table-body');
+            tbody.innerHTML = '';
+            let total = 0;
+            let count = 0;
+
+            cart.forEach((item, index) => {
+                const subtotal = item.product.price * item.quantity;
+                total += subtotal;
+                count += item.quantity;
+
+                tbody.innerHTML += `
+                    <tr>
+                        <td><strong>${item.product.name}</strong><br><small style="color:var(--gray);">ID: ${item.product.id}</small></td>
+                        <td>$${item.product.price.toFixed(2)}</td>
+                        <td>
+                            <div class="quantity-control">
+                                <button class="quantity-btn" onclick="changeQty(${index}, -1)">-</button>
+                                <span>${item.quantity}</span>
+                                <button class="quantity-btn" onclick="changeQty(${index}, 1)">+</button>
+                            </div>
+                        </td>
+                        <td>$${subtotal.toFixed(2)}</td>
+                        <td><button class="btn" style="background:var(--accent); padding: 6px 12px; font-size:0.8rem; margin:0;" onclick="removeFromCart(${index})">Quitar</button></td>
+                    </tr>
+                `;
+            });
+
+            document.getElementById('cart-count').innerText = count;
+            document.getElementById('cart-total').innerText = `$${total.toFixed(2)}`;
+        }
+
+        // Cambiar cantidad y remover del carrito
+        function changeQty(index, change) {
+            const item = cart[index];
+            const newQty = item.quantity + change;
+            if(newQty > 0 && newQty <= item.product.stock) {
+                item.quantity = newQty;
+            }
+            updateCart();
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCart();
+        }
+
+        // Entrada a la Sección de Pagos (Modificado para usar Cédula)
+        function proceedToPayment() {
+            if(cart.length === 0) {
+                alert("El carrito está vacío. Agregue delicias del catálogo primero.");
+                return;
+            }
+            if(!userData) {
+                alert("Por seguridad, cree una cuenta en la pestaña 'Usuario' antes de proceder al pago.");
+                switchSection('usuario');
+                return;
+            }
+
+            const total = cart.reduce((sum, item) => sum + (item.product.price * item.quantity), 0);
+            const currentDate = new Date().toLocaleDateString();
+
+            const paymentContainer = document.getElementById('payment-details');
+            paymentContainer.innerHTML = `
+                <div style="border: 1px solid #eee; padding: 25px; border-radius: 12px; background:#fbfbfb;">
+                    <h3 style="margin-bottom:20px; font-family:'Playfair Display', serif; color:var(--dark)"><i class="fa-solid fa-receipt" style="color:var(--primary)"></i> Resumen de Facturación</h3>
+                    <p style="margin-bottom:8px;"><strong>Cédula del Usuario:</strong> ${userData.cedula}</p>
+                    <p style="margin-bottom:8px;"><strong>Nombre Completo:</strong> ${userData.name}</p>
+                    <p style="margin-bottom:8px;"><strong>Dirección de Envío:</strong> ${userData.address}</p>
+                    <p style="margin-bottom:8px;"><strong>Fecha de Pago:</strong> ${currentDate}</p>
+                    <p style="margin-bottom:15px;"><strong>Monto a Pagar:</strong> <span style="color:var(--accent); font-weight:bold; font-size:1.3rem;">$${total.toFixed(2)}</span></p>
+                    
+                    <div class="form-group" style="margin-bottom: 20px;">
+                        <label for="methodSelect"><strong>Seleccione Método de Pago:</strong></label>
+                        <select id="methodSelect" onchange="updatePaymentStatus()">
+                            <option value="Tarjeta de Crédito">Tarjeta de Crédito</option>
+                            <option value="Tarjeta de Débito">Tarjeta de Débito</option>
+                            <option value="Efectivo">Efectivo (Contra entrega)</option>
+                        </select>
+                    </div>
+
+                    <p style="margin-bottom:20px;"><strong>Estado de Pago:</strong> <span id="paymentStatusLabel" style="background:#fff3cd; color:#856404; padding:4px 10px; border-radius:20px; font-size:0.8rem; font-weight:500;">Esperando Confirmación Final</span></p>
+                    <button class="btn" onclick="finalizeTransaction()">Confirmar Pedido y Procesar</button>
+                </div>
+            `;
+            switchSection('pagos');
+        }
+
+        function updatePaymentStatus() {
+            const method = document.getElementById('methodSelect').value;
+            const statusLabel = document.getElementById('paymentStatusLabel');
+            if(method === "Efectivo") {
+                statusLabel.innerText = "Pendiente (Se abonará en efectivo al recibir el pedido)";
+                statusLabel.style.background = "#e2e3e5";
+                statusLabel.style.color = "#383d41";
+            } else if(method === "Tarjeta de Débito") {
+                statusLabel.innerText = "Listo para débito inmediato";
+                statusLabel.style.background = "#d1ecf1";
+                statusLabel.style.color = "#0c5460";
+            } else {
+                statusLabel.innerText = "Esperando Confirmación Final";
+                statusLabel.style.background = "#fff3cd";
+                statusLabel.style.color = "#856404";
+            }
+        }
+
+        async function finalizeTransaction() {
+            const method = document.getElementById('methodSelect').value;
+            const total = cart.reduce((sum, item) => sum + (item.product.price * item.quantity), 0);
+            
+            // Usamos la fecha en formato ISO
+            const currentDate = new Date().toISOString(); 
+
+            // Estructuramos los productos del carrito
+            const listaProductos = cart.map(item => ({ 
+                id: item.product.id, 
+                nombre: item.product.name, 
+                cantidad: item.quantity 
+            }));
+
+            // 1. Alerta tradicional 
+            alert("🧁 ¡Gracias por su compra! Procesando pedido en la base de datos...");
+
+            // 2. ENVIAR PEDIDO A SUPABASE 
+            const { data, error } = await window.supabase
+                .from('pedidos') 
+                .insert([
+                    { 
+                        cedula_cliente: userData.cedula, 
+                        nombre_cliente: userData.name, 
+                        direccion_envio: userData.address, 
+                        metodo_pago: method, 
+                        total: total, 
+                        fecha: currentDate,
+                        productos: listaProductos 
+                    }
+                ]);
+
+            if (error) {
+                console.error("Error al registrar pedido:", error);
+                alert("❌ Hubo un error al guardar en la base de datos.");
+                return;
+            }
+
+            // 3. LIMPIAR CARRITO Y MOSTRAR LA TARJETA EN PANTALLA
+            cart = [];
+            updateCart();
+            
+            document.getElementById('payment-details').innerHTML = `
+                <div style="text-align: center; padding: 40px 20px; border-radius: 15px; background: #ffffff; box-shadow: 0 15px 35px rgba(0,0,0,0.05); border: 2px solid #f3e5f5;">
+                    <div style="width: 80px; height: 80px; background: #e8f5e9; color: #2a9d8f; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                        <i class="fa-solid fa-circle-check" style="font-size: 3rem;"></i>
+                    </div>
+                    <h3 style="font-family: 'Playfair Display', serif; font-size: 2rem; color: #333; margin-bottom: 10px;">¡Pedido Recibido con Éxito!</h3>
+                    <p style="color: #666; font-size: 1rem; margin-bottom: 25px;">Tu orden está siendo procesada.</p>
+                    
+                    <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; text-align: left; max-width: 400px; margin: 0 auto 25px; border-left: 4px solid #e0a96d;">
+                        <p style="margin-bottom: 8px;"><i class="fa-solid fa-wallet" style="color: #e0a96d; width: 25px;"></i> <strong>Método:</strong> ${method}</p>
+                        <p style="margin-bottom: 8px;"><i class="fa-solid fa-truck" style="color: #e0a96d; width: 25px;"></i> <strong>Despacho:</strong> Entrega a domicilio</p>
+                        <p style="color: #2a9d8f; font-weight: 600;"><i class="fa-solid fa-circle-dot" style="width: 25px;"></i> Estado: Guardado en Base de Datos</p>
+                    </div>
+                    
+                    <p style="font-size: 0.85rem; color: #666; font-style: italic;">¡Gracias por permitir a Liss Pastry Shop endulzar tus momentos!</p>
+                </div>
+            `;
+        }
+
+        // Ejecución automática al iniciar
+        window.onload = function() {
+            loadCatalog();
+            document.getElementById('regDate').valueAsDate = new Date();
+        };
+    </script>
+</body>
+</html>
